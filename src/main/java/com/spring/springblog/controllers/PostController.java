@@ -1,34 +1,50 @@
 package com.spring.springblog.controllers;
 
+import com.spring.springblog.models.Post;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PostController {
-    @RequestMapping(path = "/posts", method = RequestMethod.GET)
-    @ResponseBody
-    public String indexPage(){
-        return "posts index page";
+    @GetMapping("/posts")
+    public String postsIndex(Model model){
+        Post post1 = new Post("First Post", "here is my first post", 1);
+        Post post2 = new Post("Second Post", "here is my 2nd post", 2);
+        Post post3 = new Post("Third Post", "here is my 3rd post", 3);
+
+        List<Post> postList = new ArrayList<>();
+        postList.add(post1);
+        postList.add(post2);
+        postList.add(post3);
+
+        model.addAttribute("title", "All Posts");
+        model.addAttribute("posts", postList);
+
+        return "posts/index";
     }
 
-    @RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public String viewPost(){
-        return "view an individual post";
+    @GetMapping("/posts/{id}")
+    public String postView(Model model){
+//        get single post by id later
+        Post post = new Post("First Post", "here is my first post", 1);
+        model.addAttribute("title", "Single Posts");
+        model.addAttribute("post", post);
+        return "posts/show";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
+    @GetMapping("/posts/create")
     @ResponseBody
-    public String viewForm(){
-        return "view the form for creating a post";
+    public String postForm(){
+        return "Create a post here!";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
+    @PostMapping("/posts/create")
     @ResponseBody
     public String createPost(){
-        return "This is the landing page!";
+        return "Creating a new post...";
     }
 }
