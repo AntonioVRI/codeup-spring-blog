@@ -11,6 +11,7 @@ import java.util.List;
 @Controller
 public class PostController {
     @GetMapping("/posts")
+    //
     public String postsIndex(Model model){
         Post post1 = new Post("First Post", "here is my first post", 1);
         Post post2 = new Post("Second Post", "here is my 2nd post", 2);
