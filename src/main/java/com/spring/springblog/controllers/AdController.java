@@ -1,7 +1,7 @@
 package com.spring.springblog.controllers;
 
 import com.spring.springblog.models.Ad;
-import com.spring.springblog.repositories.AdRepository;
+import com.spring.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,10 @@ import java.util.List;
 @Controller
 public class AdController {
 
-    private final AdRepository adsDao;
+    private final PostRepository adsDao;
 
 
-    public AdController(AdRepository adsDao) {
+    public AdController(PostRepository adsDao) {
         this.adsDao = adsDao;
     }
 
