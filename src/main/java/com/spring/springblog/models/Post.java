@@ -1,19 +1,41 @@
 package com.spring.springblog.models;
 
+import javax.persistence.*;
+@Entity
+@Table(name = "posts")
 public class Post {
-    private String title;
-    private String body;
+
+    //TODO: Add the appropriate JPA annotations to your Post class to create the table and columns.
+
+    //properties
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "INT(11) UNSIGNED")
     private long id;
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String body;
+
+    //Defining the post - user relationship
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    //constructors
     public Post() {
     }
 
-    public Post(String title, String body, long id) {
+    public Post(long id, String title, String body, User user) {
+        this.id = id;
         this.title = title;
         this.body = body;
-        this.id = id;
+        this.user = user;
     }
 
+    //getters and setters
     public String getTitle() {
         return title;
     }
@@ -36,5 +58,13 @@ public class Post {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
