@@ -4,6 +4,8 @@ import com.spring.springblog.models.Post;
 import com.spring.springblog.models.User;
 import com.spring.springblog.repositories.PostRepository;
 import com.spring.springblog.repositories.UserRepository;
+import com.spring.springblog.services.EmailService;
+import com.spring.springblog.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +16,21 @@ public class PostController {
     //TODO: Use dependency injection to use an instance of the new Posts interface(PostRepository).
     // Dependency injection -> where we create a Repository instance and
     //  initialize it in the controller class constructor.
-    private final PostRepository postDao;
+    private final PostRepository postsDao;
+
+    private final UserService userService;
+    private final EmailService emailService;
 
     //TODO: Create a UserRepository interface (in repositories) and inject it
     // into the PostController.
-    private final UserRepository userDao;
+    private final UserRepository usersDao;
 
     //constructor
-    public PostController(PostRepository postDao, UserRepository userDao) {
-        this.postDao = postDao;
-        this.userDao = userDao;
+    public PostController(PostRepository postsDao, UserRepository usersDao, UserService userService, EmailService emailService) {
+        this.postsDao = postsDao;
+        this.usersDao = usersDao;
+        this.userService = userService;
+        this.emailService = emailService;
     }
 
     //methods
@@ -36,13 +43,13 @@ public class PostController {
     @GetMapping("/posts")
     public String postsIndex(Model model) {
         model.addAttribute("title", "Blog Posts");
-        model.addAttribute("posts", postDao.findAll());
+        model.addAttribute("posts", postsDao.findAll());
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
     public String postView(@PathVariable long id, Model model){
-        Post singlePost = postDao.getOne(id);
+        Post singlePost = postsDao.getOne(id);
 
         model.addAttribute("post", singlePost);
         model.addAttribute("title", singlePost.getTitle());
@@ -67,10 +74,16 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post){
-        User user = userDao.findAll().get(0);
+        User user = userService.loggedInUser();  //will replace with service
         post.setUser(user);
-        Post savePost = postDao.save(post);
+        Post savedPost = postsDao.save(post);
 
+        //send an email once post is saved
+        String subject = "New Post Created!";
+        String body = "Dear " + savedPost.getUser().getUsername() + ",\n\nThank you for creating a post. Post ID is: " +
+                savedPost.getId() + ".";
+
+        emailService.prepareAndSend(savedPost,subject, body);
         return "redirect:/posts";
     }
 
@@ -78,13 +91,13 @@ public class PostController {
     // these requests using @PostMapping annotations.
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable long id, Model model) {
-        postDao.deleteById(id);
+        postsDao.deleteById(id);
         return "redirect:/posts";
     }
 
     @GetMapping("/posts/edit/{id}")
     public String editPostForm(@PathVariable long id, Model model) {
-        Post singlePost = postDao.getOne(id);
+        Post singlePost = postsDao.getOne(id);
         model.addAttribute("title", "Edit Post");
         model.addAttribute("post", singlePost);
 
@@ -92,11 +105,10 @@ public class PostController {
     }
 
     @PostMapping("/posts/update/{id}")
-    public String updatePost(@ModelAttribute("post") Post singlePost, @PathVariable long id, Model model) {
-        postDao.save(singlePost);
-
-        model.addAttribute("title", "Update Post");
-        model.addAttribute("post", singlePost);
+    public String updatePost(@ModelAttribute("post") Post singlePost, @PathVariable long id) {
+        User user = userService.loggedInUser();
+        singlePost.setUser(user);
+        postsDao.save(singlePost);
 
         return "redirect:/posts";
     }
