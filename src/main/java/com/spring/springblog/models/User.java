@@ -29,6 +29,12 @@ public class User {
 
     //constructors
     public User() { }
+    public User(User copy) {
+        this.id = copy.id;
+        this.email = copy.email;
+        this.username = copy.username;
+        this.password = copy.password;
+    }
 
     public User(String username, String email, String password) {
         this.username = username;
