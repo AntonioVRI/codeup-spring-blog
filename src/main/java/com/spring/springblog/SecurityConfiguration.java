@@ -1,6 +1,5 @@
 package com.spring.springblog;
 
-import com.spring.springblog.services.UserDetailsLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -48,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // define pages where you don't have to be logged in
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/sign-up", "/posts", "/ads", "/login", "/weather-map")
+                .antMatchers("/", "/sign-up", "/posts", "/ads", "/login")
                 .permitAll()
 
                 // define pages that require users to be logged in

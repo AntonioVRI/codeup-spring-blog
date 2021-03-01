@@ -105,11 +105,11 @@ public class PostController {
     }
 
     @PostMapping("/posts/update/{id}")
-    public String updatePost(@ModelAttribute("post") Post singlePost, @PathVariable long id) {
+    public String updatePost(@ModelAttribute Post singlePost) {
         User user = userService.loggedInUser();
         singlePost.setUser(user);
         postsDao.save(singlePost);
 
-        return "redirect:/posts";
+        return "redirect:/posts" + singlePost.getId();
     }
 }
