@@ -10,8 +10,7 @@ public class User {
 
     //properties
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "INT(11) UNSIGNED")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false)
@@ -24,7 +23,7 @@ public class User {
     private String password;
 
     //Defining the post - user relationship
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
     //constructors

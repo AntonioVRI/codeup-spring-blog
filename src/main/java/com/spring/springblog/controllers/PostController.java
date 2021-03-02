@@ -6,6 +6,7 @@ import com.spring.springblog.repositories.PostRepository;
 import com.spring.springblog.repositories.UserRepository;
 import com.spring.springblog.services.EmailService;
 import com.spring.springblog.services.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PostController {
     //properties
-    //TODO: Use dependency injection to use an instance of the new Posts interface(PostRepository).
-    // Dependency injection -> where we create a Repository instance and
-    //  initialize it in the controller class constructor.
     private final PostRepository postsDao;
-
+    private final UserRepository usersDao;
     private final UserService userService;
     private final EmailService emailService;
-
-    //TODO: Create a UserRepository interface (in repositories) and inject it
-    // into the PostController.
-    private final UserRepository usersDao;
 
     //constructor
     public PostController(PostRepository postsDao, UserRepository usersDao, UserService userService, EmailService emailService) {
@@ -34,11 +28,6 @@ public class PostController {
     }
 
     //methods
-    @GetMapping("/home")
-    public String home(Model model) {
-        model.addAttribute("title", "Home");
-        return "/home";
-    }
 
     @GetMapping("/posts")
     public String postsIndex(Model model) {
@@ -74,7 +63,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post){
-        User user = userService.loggedInUser();  //will replace with service
+        User user = userService.getLoggedInUser();  //will replace with service
         post.setUser(user);
         Post savedPost = postsDao.save(post);
 
@@ -106,7 +95,7 @@ public class PostController {
 
     @PostMapping("/posts/update/{id}")
     public String updatePost(@ModelAttribute Post singlePost) {
-        User user = userService.loggedInUser();
+        User user = userService.getLoggedInUser();
         singlePost.setUser(user);
         postsDao.save(singlePost);
 

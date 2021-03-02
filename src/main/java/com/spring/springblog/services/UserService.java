@@ -14,8 +14,9 @@ public class UserService {
         this.usersDao = usersDao;
     }
 
-    public User loggedInUser(){
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public User getLoggedInUser(){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return usersDao.findById(loggedInUser.getId()).get();
     }
 
 }

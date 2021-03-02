@@ -21,6 +21,12 @@ public class HomeController {
         this.encoder = encoder;
     }
 
+    @GetMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("title", "Home");
+        return "home";
+    }
+
     @GetMapping("/")
     @ResponseBody
     public String home() {

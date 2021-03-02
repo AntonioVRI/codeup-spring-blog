@@ -23,8 +23,6 @@ public class UserDetailsLoader implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("No user found for username: " + username);
         }
-        UserDetails enhancedUser = new UserWithRoles(user);
-        return enhancedUser;
-
+        return new UserWithRoles(user);
     }
 }

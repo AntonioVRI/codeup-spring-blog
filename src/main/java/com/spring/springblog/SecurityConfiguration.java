@@ -24,9 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsLoader)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsLoader)
+            .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -36,24 +35,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
                 .permitAll()
-
-                // logout configuration
                 .and()
                 .logout()
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/")
-
-                // define pages where you don't have to be logged in
+                .logoutSuccessUrl("/login?logout")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/sign-up", "/posts", "/ads", "/login")
+                .antMatchers("/", "/sign-up", "/ads", "/posts")
                 .permitAll()
-
-                // define pages that require users to be logged in
                 .and()
                 .authorizeRequests()
-                .antMatchers("/ads/*", "/posts/*", "/posts")
+                .antMatchers("/ads/*", "/posts/*")
                 .authenticated();
     }
 

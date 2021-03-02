@@ -3,25 +3,36 @@
 <head th:replace="partials/head :: header-links"></head>
 <body>
     <nav th:replace="partials/navbar :: navbar"></nav>
-    <div class="container text-center">
+<!--    <div class="container text-center">-->
 
-        <br>
+<!--        <br>-->
 
-        <h1>Here is a single post !</h1>
-            <p th:text="${post.title}"></p>
-            <p th:text="${post.body}"></p>
+<!--        <h1>Here is a single post !</h1>-->
+<!--            <p th:text="${post.title}"></p>-->
+<!--            <p th:text="${post.body}"></p>-->
 
-        <h2 th:text="${post.title}"></h2>
-            <p th:text="${post.body}"></p>
-            <p th:text="'Posted by: ' +  ${post.user.username}"></p>
-            <a th:href="@{/posts/edit/{id}(id=${post.id})}"
-                class="btn btn-warning">
-                    Edit
-            </a>
-            <a th:href="@{/posts/delete/{id}(id=${post.id})}"
-                class="btn btn-danger">
-                    Delete
-            </a>
+<!--        <h2 th:text="${post.title}"></h2>-->
+<!--            <p th:text="${post.body}"></p>-->
+<!--            <p th:text="'Posted by: ' +  ${post.user.username}"></p>-->
+<!--            <a th:href="@{/posts/edit/{id}(id=${post.id})}"-->
+<!--                class="btn btn-warning">-->
+<!--                    Edit-->
+<!--            </a>-->
+<!--            <a th:href="@{/posts/delete/{id}(id=${post.id})}"-->
+<!--                class="btn btn-danger">-->
+<!--                    Delete-->
+<!--            </a>-->
+<!--    </div>-->
+
+    <div class="container">
+        <h1 class="my-4">Here is a single post !</h1>
+
+        <h3 th:text="${post.title}"></h3>
+        <p th:text="'Authored by ' + ${post.user.email}" />
+        <p th:text="${post.body}"></p>
+        <div th:replace="partials/scripts :: assets"></div>
+        <a th:href="@{|/posts/${post.id}/edit|}">Edit Post</a>
+
     </div>
     <footer th:replace="partials/footer :: footer"></footer>
 
