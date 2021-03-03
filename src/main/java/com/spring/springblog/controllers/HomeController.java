@@ -21,17 +21,17 @@ public class HomeController {
         this.encoder = encoder;
     }
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Home");
         return "home";
     }
 
-    @GetMapping("/")
-    @ResponseBody
-    public String home() {
-        return "This is the landing page!";
-    }
+//    @GetMapping("/")
+//    @ResponseBody
+//    public String home() {
+//        return "This is the landing page!";
+//    }
 
     @GetMapping("/login")
     public String showLoginForm() {
