@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head :: header-links"></head>
+<div th:insert="partials/partials.html :: head"></div>
 <body>
-<nav th:replace="partials/navbar :: navbar"></nav>
+<nav th:replace="partials/partials :: navbar"></nav>
 
 <!-- This is where we iterate through the Posts ArrayList -->
 <h1>Here are all the posts!</h1>
