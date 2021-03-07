@@ -6,6 +6,7 @@ import com.spring.springblog.repositories.PostRepository;
 import com.spring.springblog.repositories.UserRepository;
 import com.spring.springblog.services.EmailService;
 import com.spring.springblog.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class PostController {
     private final EmailService emailService;
 
     //constructor
+    @Autowired
     public PostController(PostRepository postsDao, UserRepository usersDao, UserService userService, EmailService emailService) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
