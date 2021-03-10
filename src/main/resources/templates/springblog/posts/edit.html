@@ -8,7 +8,7 @@
 <div class="container">
     <h1 class="my-4">Create Post</h1>
 
-    <form th:action="@{/posts/{id}/edit(id=${post.id})}" th:method="POST" th:object="${post}">
+    <form th:action="@{/templates/springblog/posts/{id}/edit(id=${post.id})}" th:method="POST" th:object="${post}">
         <div class="form-group">
             <label for="title">Title</label>
             <input class="form-control" type="text" id="title" th:field="*{title}" th:value="${post.title}" />
@@ -21,7 +21,7 @@
         <input class="btn btn-primary" type="submit" value="Edit Post" />
     </form>
 
-    <form th:action="@{|/posts/${post.id}/delete|}" th:method="POST">
+    <form th:action="@{|/templates/springblog/posts/${post.id}/delete|}" th:method="POST">
         <input class="btn btn-danger" type="submit" value="Delete Post" />
     </form>
 </div>

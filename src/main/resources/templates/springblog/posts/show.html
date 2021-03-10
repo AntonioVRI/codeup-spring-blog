@@ -31,10 +31,10 @@
         <p th:text="'Authored by ' + ${post.user.email}" />
         <p th:text="${post.body}"></p>
         <div th:replace="partials/scripts :: assets"></div>
-        <a th:href="@{|/posts/${post.id}/edit|}">Edit Post</a>
+        <a th:href="@{|/templates/springblog/posts/${post.id}/edit|}">Edit Post</a>
 
     </div>
-    <footer th:replace="partials/footer :: footer"></footer>
+    <footer th:replace="partials/partials :: footer"></footer>
 
     <div th:replace="partials/scripts :: assets"></div>
 </body>

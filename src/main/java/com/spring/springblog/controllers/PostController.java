@@ -56,6 +56,7 @@ public class PostController {
     //TODO: Change your controller method for showing the post creation form to
     // actually show the form in create.html. This method should
     // pass a new (i.e. empty) Post object to the view.
+
     @GetMapping("/posts/create")
     public String showPostForm(Model model){
         model.addAttribute("title", "Creating Post");

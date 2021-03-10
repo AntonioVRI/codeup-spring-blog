@@ -16,13 +16,17 @@
     <div class="nav-wrapper">
         <ul>
             <li><a class="nav-link" th:href="@{/home}">Home</a></li>
-            <li><a class="nav-link" th:href="@{/posts}">Posts</a></li>
-            <li><a class="nav-link" th:href="@{/posts/create}">Create a Post</a></li>
+            <li><a class="nav-link" th:href="@{/templates/springblog/posts}">Posts</a></li>
+            <li><a class="nav-link" th:href="@{/templates/springblog/posts/create}">Create a Post</a></li>
             <li><a class="nav-link" th:href="@{/roll-dice}">Roll Dice</a></li>
             <li><a class="nav-link" th:href="@{/sign-up}">Sign Up</a></li>
         </ul>
     </div>
 </nav>
+
+
+
+<footer th:fragment="footer"> © Anthony Vidaurri Portfolio </footer>
 
 </body>
 </html>

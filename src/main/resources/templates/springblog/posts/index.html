@@ -9,7 +9,7 @@
 
 <div class="container">
     <div th:each="post : ${posts}">
-        <a th:text="${post.title}" th:href="@{|/posts/${post.id}|}"></a>
+        <a th:text="${post.title}" th:href="@{|/templates/springblog/posts/${post.id}|}"></a>
         <p th:text="${post.body}"></p>
     </div>
 </div>
